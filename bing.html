@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvasId"></canvas>
+</body>
+<script>
+    let data = [
+        {
+            'text':'白菜',
+            'pers':0.25,
+            'color':'green'
+        },
+        {
+            'text':'番薯',
+            'pers':0.45,
+            'color':'red'
+        },
+        {
+            'text':'白菜',
+            'pers':0.3,
+            'color':'blue'
+        }
+    ]
+
+    let canvas = document.querySelector('#canvasId');
+    canvas.width=600;
+    canvas.height=800;
+
+    let cav = canvas.getContext('2d');
+
+    function drawCircle(color,x,y,r,strat,end){
+        cav.beginPath();
+        cav.fillStyle = color ;
+        cav.moveTo(x,y);
+        cav.arc(x,y,r,2*Math.PI/360*strat , 2*Math.PI/360*end,false);
+        cav.closePath();
+        cav.fill();
+    }
+    function drawText(color,text,r,angle){
+        let x = r * Math.sin(2*Math.PI/360*angle)+200;
+        let y = r * Math.cos(2*Math.PI/360*angle)+200;
+        cav.beginPath();
+        cav.font='20px "宋体"';
+        cav.textAlign='center';
+        cav.fillStyle = color ;
+        cav.fillText(text,x,y);
+        cav.closePath();
+
+    }
+
+    function drawLine(color,r,angle){
+        let x = r * Math.sin(2*Math.PI/360*angle)+200;
+        let y = r * Math.cos(2*Math.PI/360*angle)+200;
+        cav.beginPath();
+        cav.strokeStyle=color;
+        cav.moveTo(200,200);
+        cav.lineTo(x,y);
+    }
+    let startAngle = 0;
+    let endAngle=0;
+    for(var i  = 0 ; i<data.length;i++){
+        let ang = startAngle + 50;
+        drawText(data[i].color,data[i].text,180,ang);
+        drawText(data[i].color,data[i].text,120,ang);
+        drawLine(data[i].color,180,ang);
+        endAngle = data[i].pers*360+startAngle;
+        drawCircle(data[i].color,200,200,80,startAngle,endAngle);
+        startAngle=endAngle;
+    }
+</script>
+</html>

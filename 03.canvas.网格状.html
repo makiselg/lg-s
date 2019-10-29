@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas</title>
+</head>
+<body>
+    <canvas id="canvasId"></canvas>
+    <script>
+        // 1.0 
+        let canvas = document.querySelector("#canvasId");
+        let width = 400;
+        let height = 400;
+        let rowCount = 20;
+        let colCount = 20;
+        let space = 20;
+        
+        // 2.0 设置画布大大小
+        canvas.width =width + 100;
+        canvas.height = height + 100;
+
+        // 获取canvas上下文对象
+        let ctx = canvas.getContext('2d');
+        // 3.0 设置网格状
+        // for
+        for(var i = 0 ; i <=rowCount;i++){
+
+            // ctx.beginPath();
+            // ctx.lineWidth = 1;
+            // ctx.moveTo(50 , i * space + 50);
+            // ctx.lineTo(450, i * space + 50);
+            // ctx.closePath();
+            // ctx.stroke();
+            drawLine(50 , i * space + 50 ,450, i * space + 50)
+
+            // ctx.beginPath();
+            // ctx.moveTo( i * space + 50 , 50);
+            // ctx.lineTo(i * space + 50 , 450);
+            // ctx.closePath();
+            // ctx.stroke();
+            drawLine(i * space + 50 , 50 , i * space + 50 , 450)
+        }
+
+        function drawLine(x0,y0,x , y){
+            ctx.beginPath();
+            ctx.strokeStyle='skyblue';
+            ctx.moveTo( x0  , y0);
+            ctx.lineTo(x, y);
+            ctx.closePath();
+            ctx.stroke();
+        }
+
+       
+    </script>
+</body>
+</html>

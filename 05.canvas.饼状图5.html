@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas 饼状图</title>
+</head>
+<body>
+    <canvas id="canvasId"></canvas>
+    <script>
+        
+        // 定义数据  比例： 0-1   /  角度 0 - 360 
+        let data = [
+            {
+                'text':'白菜',
+                'pers':0.25,
+                'color':'green'
+            },
+            {
+                'text':'番薯',
+                'pers':0.45,
+                'color':'purple'
+            },
+            {
+                'text':'玉米',
+                'pers':0.3,
+                'color':'blue'
+            }
+        ]
+
+        // 1 获取canvas标签
+        let canvas = document.querySelector("#canvasId")
+        canvas.width = 600;
+        canvas.height = 800;
+        let ctx = canvas.getContext('2d');
+        //绘制圆弧的方法
+        function drawCircle(color,x,y,r,start,end){
+            ctx.beginPath();
+            ctx.fillStyle = color;
+            ctx.moveTo(x,y);
+            ctx.arc(x,y,r,2 * Math.PI/360 * start ,2 * Math.PI/360 * end ,false);
+            ctx.closePath();
+            ctx.fill();
+        } 
+        // 绘制文本
+        function drawText(color,text,r,angle){
+            // 计算半径和角度对应的坐标
+            let y = r * Math.sin(2 * Math.PI/360 * angle) + 200;
+            let x = r * Math.cos(2 * Math.PI/360 * angle) + 200;
+            console.log(x , y)
+            ctx.beginPath();
+            ctx.font='20px "宋体"'
+            ctx.textAlign='center'// left right 
+            ctx.fillStyle=color;
+            ctx.fillText(text,x,y);
+            ctx.closePath();
+        }
+        // 绘制线
+        function drawLine(color,r,angle){
+              // 计算半径和角度对应的坐标
+                let y = r * Math.sin(2 * Math.PI/360 * angle) + 200;
+                let x = r * Math.cos(2 * Math.PI/360 * angle) + 200;
+                console.log(x , y)
+                ctx.beginPath();
+                ctx.strokeStyle=color;
+                ctx.moveTo(200,200);//圆心
+                ctx.lineTo(x,y);
+                ctx.closePath();
+                ctx.stroke();
+        }
+        // drawText('red','测试',180, 270)
+        // drawImage()
+        // drawCircle('red',100,100,50,0,90)
+        // 定义角度
+        // 开始的角度
+        let startAngle = 0
+        // 结束的角度
+        let endAngle = 0
+        // 
+        for(var i = 0 ; i < data.length ; i ++){
+            // 绘制文本坐标所需要的角度
+            let ang = startAngle + 50;
+            // 绘制文本
+            drawText(data[i].color,data[i].text,180,ang)
+            // 百分比
+            drawText(data[i].color,data[i].pers,120,ang)
+            // 绘制线
+            drawLine(data[i].color,180,ang)
+            // 0       0.25 * 360
+            // 1       0.25 * 360 + 0.45 * 360
+            // 2       0.25 * 360 +  0.45 * 360 +  0.3 * 360
+            endAngle = data[i].pers * 360 + startAngle
+            // 0                                     0              0 + 0.25 * 360  
+            // 1                                    0.25 * 360      0.25 * 360 +  0.45 * 360
+            // 2                                    0.25 * 360 +  0.45 * 360   0.25 * 360 +  0.45 * 360 + 0.3 * 360
+            drawCircle(data[i].color,200,200,80, startAngle ,endAngle);
+            // 0        0.25 * 360
+            // 1        0.25 * 360 +  0.45 * 360
+            // 2        0.25 * 360 +  0.45 * 360 + 0.3 * 360
+            startAngle = endAngle;
+        }
+        
+    
+    
+    </script>
+</body>
+</html>

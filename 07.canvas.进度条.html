@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas 进度条 </title>
+    <style>
+        html , body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvasId">改浏览器不支持Canvas</canvas>
+    <script>
+        // 1.0 获取canvas标签
+        let canvas = document.getElementById('canvasId')
+        // 2.0 设置画布的大小
+        canvas.width = window.innerWidth
+        canvas.height = 800
+        // 3.0 获取画布的上下文对象
+        let ctx = canvas.getContext('2d')
+        // 4.0 
+        // 定义函数绘制矩形
+        function drawRect(color,bgColor,x,y,w,h){
+            ctx.beginPath()
+            ctx.strokeStyle=color
+            ctx.fillStyle=bgColor
+            ctx.lineWidth=3
+            ctx.rect(x,y,w,h);
+            ctx.fillRect(x,y,w,h)
+            ctx.closePath()
+            ctx.stroke()
+        }
+        // drawRect('orange','blue',200,50,1000,20)
+
+        // 内外两个矩形
+        // 外部的矩形
+        // drawRect('green','transparent',0,5,canvas.width,10)
+        // 内部的矩形
+        // drawRect('transparent','orange',0,5,canvas.width*(1/100),10)
+        // 
+        // let count = 0;
+        // // 定时器
+        // let timer = setInterval(()=>{
+        //     count ++;
+        //     count = count == 100 ? 100 : count;
+        //     if(count > 100) {
+        //         clearInterval(timer); 
+        //         return;
+        //     }
+        //     console.log(count)
+        //     // let width = `${canvas.width}*(${count}/100)` //字符串
+        //     let width = canvas.width*(count/100);
+        //     // drawRect('transparent','orange',0,5,width,10)
+        //     // progress(width) //测试
+        // },20)
+
+
+
+        // === 
+        function progress(persent){
+            // 每次绘制的时候，清空画布
+            ctx.clearRect(0,0,canvas.width,30);
+            // 外部的矩形
+            drawRect('green','transparent',0,5,canvas.width,10)
+            // 内部的矩形
+            drawRect('transparent','orange',0,5,persent,10)
+        }
+
+        // 定义计数器变量
+        let index = 0
+        // 循环
+        for(var i = 0 ; i < 106;i++){
+            // 创建图片
+            var image = new Image()
+            // 请求资源
+            image.src =`./images/${i}.jpg`
+            // 加载资源
+            image.onload = function(){
+                index ++//自增
+                let length = canvas.width*(index/100)//进度条宽度
+                progress(length)//绘制进度条
+            }
+        }
+    </script>
+
+</body>
+</html>

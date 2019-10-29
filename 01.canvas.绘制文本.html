@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas</title><!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>canvas 绘制文本 </title>
+    </head>
+    <body>
+        <canvas id="canvasId">改浏览器不支持Canvas</canvas>
+        <script>
+            // 1.0 获取canvas标签
+            let canvas = document.getElementById('canvasId')
+            // 2.0 设置画布的大小
+            canvas.width = 1000
+            canvas.height = 800
+            // 3.0 获取画布的上下文对象
+            let ctx = canvas.getContext('2d')
+            // 
+            ctx.beginPath()
+            ctx.strokeStyle="blue"
+            ctx.rect(200,100,300,300)
+            ctx.stroke();
+            ctx.closePath()
+            // 4.0 
+            // 开始绘制
+            ctx.beginPath()
+            // 设置文本颜色
+            ctx.fillStyle='red'
+            // 定义文本
+            let text = 'hello world'
+            // 设置字体大小
+            ctx.font='50px  "微软雅黑"'
+            // 设置水平位置
+            ctx.textAlign='center'// left right 
+            // 设置文本垂直位置
+            ctx.textBaseline ='middle';// top bottom
+            // 绘制文本 1.文本 2.x  3.y
+            ctx.fillText(text,200,100)
+            // 结束绘制的路径
+            ctx.closePath()
+
+           
+
+        </script>
+    
+    </body>
+    </html>
+</head>
+<body>
+
+
+    <canvas id="canvasId"></canvas>
+
+
+</body>
+</html>
